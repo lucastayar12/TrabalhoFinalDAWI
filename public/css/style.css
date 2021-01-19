@@ -1,0 +1,81 @@
+.pg-footer {
+    padding: 2.5rem 0;
+    color: #ffffff;
+    text-align: center;
+    border-top: .05rem solid #e5e5e5;
+  }
+  
+  .pg-footer p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  body {
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+  }
+  
+  header {
+    min-height: 50px;
+    background: lightcyan;
+  }
+  
+  footer {
+    background: PapayaWhip;
+  }
+  
+  /* Trick: */
+  
+  body {
+    position: relative;
+  }
+  
+  body::after {
+    content: '';
+    display: block;
+    height: 200px;
+    /* Set same as footer's height */
+  }
+  
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+  }
+  
+  html {
+    margin: 0;
+    padding: 0;
+  }
+ 
+  .carousel-inner {
+    padding-top: 30px;
+    height: auto;
+  }
+  
+  a {
+    color: #ffffff;
+  }
+  
+  a:visited {
+    color: #ffffff;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  @media screen and (min-width: 956px) {
+    .repocont {
+      width: 75%;
+    }
+  }
+  
+  .navbar {
+    width: auto;
+  }
