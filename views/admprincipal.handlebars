@@ -1,0 +1,87 @@
+<section>
+
+    <div class="container fluid bg-dark text-white rounded center" style="margin-top: 50px; height: auto;">
+        <h3>Principal</h3>
+
+        <div class="">
+            <div class="row">
+                <div class="col-6">
+                    <p><button class="btn btn-primary rounded" onclick="Dados.mudarEstadoListar('ListarMembro');">Listar
+                            Membros</button></p>
+                    <p><button class="btn btn-primary rounded" onclick="Dados.mudarEstado('RegistrarMembro');">Registrar
+                            Membro</button></p>
+                </div>
+
+                <div class="col-6" id="ListarMembro" style="display: none;">
+
+                    <br>
+                    <table class="table text-white">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id:</th>
+                                <th scope="col">Nome:</th>
+                                <th scope="col">Cargo:</th>
+                                <th scope="col">Imagem:</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Membros">
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col-6" id="RegistrarMembro" style="display: none;">
+
+                    <p><label for="">Nome:</label>
+                        <input type="text" id="nome" class="form-control">
+                    </p>
+
+
+                    <p><label for="">Cargo:</label>
+                        <select class="form-select form-select-lg" id="cargo" name="cargo"
+                            aria-label="Default select example">
+                            <option value="" selected disabled>Escolha um cargo...</option>
+                            <option value="Lider">Lider</option>
+                            <option value="Oficial">Oficial</option>
+                            <option value="Membro">Membro</option>
+                            <option value="Novato">Novato</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        <label for="">Imagem:</label>
+                        <input type="file" name="" id="imagem">
+                    <p id="imgBase64" style="display: none;"></p>
+
+                    </p>
+
+                    <p id="idEdit" style="display: none;"></p>
+
+                    <p id="Btns">
+                        <button class="btn btn-primary" onclick="Dados.salvarMembro();" id="btnSalvar">Salvar</button>
+                        <button class="btn btn-primary" onclick="Dados.edita();" id="btnEdit">Editar</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    $("#imagem").on("change", function (event) {
+        console.log("1");
+        var file = event.target.files;
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function (e) {
+
+            console.log("2");
+
+            $("#imgBase64").get(0).innerHTML = e.target.result;
+        });
+
+        reader.readAsDataURL(file[0]);
+    });
+</script>
