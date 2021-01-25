@@ -10,6 +10,9 @@
                             Membros</button></p>
                     <p><button class="btn btn-primary rounded" onclick="Dados.mudarEstado('RegistrarMembro');">Registrar
                             Membro</button></p>
+                    <p><button class="btn btn-primary rounded"
+                            onclick="Dados.mudarEstadoListar2('AplicacoesCRUD');">Aplicações
+                        </button></p>
                 </div>
 
                 <div class="col-6" id="ListarMembro" style="display: none;">
@@ -62,6 +65,27 @@
                         <button class="btn btn-primary" onclick="Dados.salvarMembro();" id="btnSalvar">Salvar</button>
                         <button class="btn btn-primary" onclick="Dados.edita();" id="btnEdit">Editar</button>
                     </p>
+                </div>
+
+                <div class="col-6" style="display: none;" id="AplicacoesCRUD">
+                    <table class="table text-white">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id:
+                                </th>
+                                <th>
+                                    Familia:
+                                </th>
+                                <th>
+                                    Discord:
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="Aplicacoes">
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

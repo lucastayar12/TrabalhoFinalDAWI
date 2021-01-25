@@ -51,7 +51,7 @@ Dados = {
 
             var btnEdit = document.createElement('button');
 
-            btnExcluir.setAttribute('class', 'btn btn-primary');
+            btnExcluir.setAttribute('class', 'btn btn-danger');
             btnEdit.setAttribute('class', 'btn btn-primary');
 
             btnExcluir.innerHTML = "x";
@@ -98,8 +98,12 @@ Dados = {
         if (display == "none") {
             document.getElementById(el).style.display = 'block';
 
-            if (document.getElementById('RegistrarMembro').style.display == 'block')
+            if (document.getElementById('RegistrarMembro').style.display == 'block' || document.getElementById('AplicacoesCRUD').style.display == 'block')
+            {
                 document.getElementById('RegistrarMembro').style.display = 'none';
+                document.getElementById('AplicacoesCRUD').style.display = 'none';
+            }
+                
 
             $.ajax({
                 type: "GET",
@@ -118,8 +122,11 @@ Dados = {
         var display = document.getElementById(el).style.display;
         if (display == "none") {
             document.getElementById(el).style.display = 'block';
-            if (document.getElementById('ListarMembro').style.display == 'block')
-                document.getElementById('ListarMembro').style.display = 'none'
+            if (document.getElementById('ListarMembro').style.display == 'block' || document.getElementById('AplicacoesCRUD').style.display == 'block') {
+                document.getElementById('ListarMembro').style.display = 'none';
+                document.getElementById('AplicacoesCRUD').style.display = 'none';
+            }
+
         }
         else
             document.getElementById(el).style.display = 'none';
@@ -205,6 +212,111 @@ Dados = {
         })
     },
 
+    aplica: () => {
+
+        var t = {};
+
+        t.familia = $('#familia').val();
+        t.discord = $('#discord').val();
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/aplicase',
+            data: t,
+            success: (data) => {
+
+                alert(data)
+
+            }
+        })
+    },
+
+    mudarEstadoListar2: (el) => {
+        var display = document.getElementById(el).style.display;
+        if (display == "none") {
+            document.getElementById(el).style.display = 'block';
+
+            if (document.getElementById('RegistrarMembro').style.display == 'block' || document.getElementById('ListarMembro').style.display == 'block') {
+                document.getElementById('RegistrarMembro').style.display = 'none';
+                document.getElementById('ListarMembro').style.display = 'none';
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: "/admin/aplicacoes",
+                success: (data) => {
+                    Dados.tamplateAplicar(data);
+                },
+                dataType: "json"
+            })
+        }
+        else
+            document.getElementById(el).style.display = 'none';
+    },
+
+    tamplateAplicar: (data) => {
+
+        var tupla = $("#Aplicacoes");
+        tupla.html('');
+
+        data.forEach(element => {
+            var row = document.createElement('tr');
+
+            var tdId = document.createElement('td');
+            var tdFamilia = document.createElement('td');
+            var tdDiscord = document.createElement('td');
+
+            tdId.innerHTML = String(element.id);
+            tdFamilia.innerHTML = String(element.familia);
+            tdDiscord.innerHTML = String(element.discord);
+
+
+
+            var tdBtns = document.createElement('td');
+            var btnExcluir = document.createElement('button');
+            row.setAttribute("id", "Registro ID:" + element.id);
+
+            $(btnExcluir).on("click", (event) => {
+                Dados.remove2(event.target);
+            });
+
+            btnExcluir.setAttribute('class', 'btn btn-danger');
+
+            btnExcluir.innerHTML = "x";
+
+
+            row.append(tdId);
+            row.append(tdFamilia);
+            row.append(tdDiscord);
+            tdBtns.append(btnExcluir);
+            row.append(tdBtns);
+
+            tupla.append(row);
+        });
+
+    },
+
+    remove2: (button) => {
+
+        var registro = $(button).parent().parent();
+        var id = $(registro).attr("id").replace("Registro ID:", "");
+
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/deletarA",
+            data: { "id": id },
+            success: (data) => {
+                $(registro).remove();
+
+            },
+            error: () => {
+
+            }
+        })
+    },
+
 
 }
 
@@ -216,17 +328,17 @@ window.onload = () => {
         url: "/membros/listar",
         success: (data) => {
 
-            
+
             var row = document.createElement('div');
             row.setAttribute('class', "row");
             var body = document.getElementById('MembrosList');
             data.forEach(element => {
-             
+
                 var col3 = document.createElement('div');
                 var img = document.createElement('img');
                 var h5 = document.createElement('h5');
                 var span = document.createElement('span');
-                
+
 
                 col3.setAttribute("class", "col-3");
                 img.setAttribute("class", "img-fluid rounded-circle");
@@ -237,16 +349,16 @@ window.onload = () => {
                 img.style = "width: 150px; height: 150px";
                 h5.innerHTML = element.nome;
 
-                
+
 
                 row.append(col3);
                 col3.append(img);
                 col3.append(h5)
                 col3.append(span)
-               
+
             });
             body.append(row);
-           
+
         }
     });
 }

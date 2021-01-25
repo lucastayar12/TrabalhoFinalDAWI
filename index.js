@@ -18,6 +18,7 @@ app.use(express.static('node_modules'));
 
 require('./src/admin/routes')(app)
 require('./src/membros/routes')(app)
+require('./src/aplicações/routes')(app)
 
 db.sequelize.sync({ alter: true }).then(() => {
     console.log("Base de dados criada com sucesso")
@@ -37,6 +38,14 @@ app.get("/admin", (req, res) => {
 
 app.get("/membros", (req, res) => {
     res.render('membros');
+})
+
+app.get("/aplicase", (req, res) => {
+    res.render('aplicase');
+})
+
+app.get("/sobre", (req, res) => {
+    res.render('sobre');
 })
 
 var server = app.listen(3000, () => {
